@@ -1,0 +1,28 @@
+/*
+Theme Name: 	hat
+Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
+Description: 	HbbTV Application Toolkit
+Version: 		0.1
+Author: 		Fraunhofer Fokus
+Author URI: 	http://www.fokus.fraunhofer.de/go/fame
+Tags: 			hbbtv
+*/
+
+
+.gallery-item-list {
+	overflow-x: scroll;
+	overflow-y: auto;
+}
+.drag-gallery-item{
+	width: 10%;
+	float: left;
+}
+.hat-gallery-item {
+
+}
+.item-title {
+
+}
+.item-cover {
+	width: 100%;
+}

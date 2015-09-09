@@ -1,0 +1,159 @@
+/*
+Theme Name: 	hat
+Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
+Description: 	HbbTV Application Toolkit
+Version: 		0.1
+Author: 		Fraunhofer Fokus
+Author URI: 	http://www.fokus.fraunhofer.de/go/fame
+Tags: 			hbbtv
+*/
+
+[draggable] {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* Required to make elements draggable in old WebKit */
+  -khtml-user-drag: element;
+  -webkit-user-drag: element;
+}
+
+
+.btn_control_decription{
+	margin: 50px 0;
+}
+
+.btn_control_pages_list_wrapper{
+  width: 100%;
+  float: left;
+  margin: 0 5% 5% 0;
+}
+
+.btn_control_pages_buttons_wrapper {
+  width: 70%;
+  float: left;
+  margin: 0 5% 5% 0;
+}
+
+#btn_control_pages_list,
+.btn_control_pages_list_wrapper li {
+	padding: 10px;
+  width: auto;
+  border: 1px solid #9B9B9B;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background: #FFF;
+}
+
+ul:empty::after{
+  content: attr(data-empty-message) !important;
+}
+
+.btn_control_pages_list_wrapper li {
+  cursor: move;
+}
+
+.btn_control_pages {
+  text-decoration: none;
+  color: #000;
+  margin: 10px;
+  width: auto;
+  border: 1px solid #9B9B9B;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  padding: 10px;
+  display: block;
+}
+
+.btn_control_pages_buttons{
+  width: auto;
+  border: 1px solid #aaaaaa;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  border-radius: 8px;
+  background: #FFF;
+}
+
+.btn_control_pages_buttons ul{
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+
+.btn_control_pages_buttons .drag-menu-item {
+  padding: 15px;
+  margin: 0;
+  height: 25px;
+  border-bottom: 1px solid #9B9B9B;
+  text-align: center;
+}
+
+#button-bar .drag-button {
+  padding-right: 10px;
+}
+
+.btn_control_pages_buttons_wrapper li:last-child {
+  border-bottom: none;
+}
+
+.btn_control_pages_buttons_wrapper li:last-child {
+  border-bottom: none;
+}
+
+.drag-menu-item.placeholder .hat-menu-post {
+  width: 100%;
+}
+
+.btn_control_post_lists {
+  width: 20%;
+  overflow: auto;
+  margin:0px 5% 5% 0px;
+  float: left;
+}
+
+.hat-menu-button {
+  width: 10%;
+  float: left;
+}
+
+.droped-list .hat-menu-post {
+  width: 75%;
+  height:100%;
+  float: left;
+}
+
+.remove-menu-item {
+  width: 15%;
+  float:left;
+}
+
+#button-bar li {
+  float: left;
+}
+
+#hide-button {
+  background-color: #aaaaaa;
+}
+
+
+.remove-menu-item:hover {
+  color:#f55;
+  transform: scale(1.2,1.2);
+}
+
+.hat-button:hover {
+  transform: scale(1.2,1.2);
+}
+
+#save-notification {
+  display:none;
+  border-radius: 8px;
+  border: 1px solid rgb(51, 170, 51);
+  width: 500px;
+  background: rgb(170, 255, 170) none repeat scroll 0% 0%;
+  color: #EEE;
+  margin: 0px auto;
+  margin-top: 50px;
+  text-align: center;
+}
