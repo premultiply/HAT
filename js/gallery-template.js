@@ -1,9 +1,8 @@
 
-
 $(document).ready(function(){
 	var cur_item;
 	var info_view = false;
-	//GALLERY---------------------------------------------------------------------------------------
+	
 	$('.gallery-item').activate(function(){
 		$('#description').html('');
 		$('#item-title').html('');
@@ -21,11 +20,11 @@ $(document).ready(function(){
 				$('#item-info-trailer').empty().html("<object id='trailer-player' type='video/mp4' data='"+item.trailer_url+"'></object>").show();
 				window.setTimeout( function() { if($('#trailer-player')){vid_obj = $('#trailer-player')[0]; if (vid_obj) vid_obj.play(1); } }, 10);
 			}
-		},function(){
+		},function(jqXHR, textStatus, errorThrown){
 			$('#description').html("Could not find the ressource");
 		});
 		var list = $('#gallery-item-list');
-		list[0].scrollTop = $(this).position().top-list.height()/2+$(this).height()/2+parseInt($(this).css('margin-top'));
+		list[0].scrollTop =  $(this).position().top+$(this).height()/2-list.height()/2+parseInt($(this).css('margin-top'));
 	}).destroy(function(){
 		var trailer = document.getElementById('trailer-player');
 		if (trailer) trailer.stop();
@@ -46,7 +45,6 @@ $(document).ready(function(){
 	}).navDown(function(){
 		var next = $(this).next('.gallery-item');
 		if (next.length){
-			$(this).destroy();
 			next.activate();
 		}
 	});

@@ -1,4 +1,10 @@
-<!--
+<?php 
+/**
+ * Template Name: Gallery
+ * A custom page template for the HAT Full-Template.
+ */
+
+/*
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
 Description: 	HbbTV Application Toolkit
@@ -6,14 +12,8 @@ Version: 		0.1
 Author: 		Fraunhofer Fokus
 Author URI: 	http://www.fokus.fraunhofer.de/go/fame
 Tags: 			hbbtv
--->
+*/
 
-
-<?php 
-/**
- * Template Name: Gallery
- * A custom page template for the HAT Full-Template.
- */
 Hat_Utilities::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) );
 $postMeta = get_post_meta( $post->ID, '_hat_pageContent', true);
 if(!$postMeta) { $postMeta = array(); }
@@ -28,8 +28,8 @@ if (isset($postMeta['cover_orientation']) && !empty($postMeta['cover_orientation
 	$orientation = 'portrait';
 }
 ?>
-<script type='text/javascript' src="<?php bloginfo( 'template_url' ); ?>/js/gallery-template.js"></script>
-<script type='text/javascript' src="<?php bloginfo( 'template_url' ); ?>/js/api.js"></script>
+<script type='text/javascript' src="<?php bloginfo( 'template_url' ); echo '/js/gallery-template'.Hat_Utilities::minified().'.js';?>"></script>
+<script type='text/javascript' src="<?php bloginfo( 'template_url' ); echo '/js/api'.Hat_Utilities::minified().'.js';?>"></script>
 <div id="content" class="<?php echo $orientation.' '.$list_pos; ?>">
 	<script>
 		var theme_url = '<?php echo get_template_directory_uri(); ?>';

@@ -23,6 +23,11 @@ Tags: 			hbbtv
 	margin: 50px 0;
 }
 
+.btn_control_pages_list:empty::before {
+  height: 50px;
+  content: "No Items"
+}
+
 .btn_control_pages_list_wrapper{
   width: 100%;
   float: left;
@@ -44,10 +49,6 @@ Tags: 			hbbtv
   -moz-border-radius: 8px;
   border-radius: 8px;
   background: #FFF;
-}
-
-ul:empty::after{
-  content: attr(data-empty-message) !important;
 }
 
 .btn_control_pages_list_wrapper li {

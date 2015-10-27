@@ -1,5 +1,4 @@
 var userFunctions = new Object();
-
 $(document).ready(function(){
 			//Primary Menu
 	var $menuActive;
@@ -21,7 +20,7 @@ $(document).ready(function(){
 	}).navDown(function(){
 		var next = $(this).next();
 		if(next.length) next.activate();
-	})
+	});
 	// Popup
 	$('#popup').activate(function(){
 		$(this).show();
@@ -47,7 +46,7 @@ $(document).ready(function(){
 		var text = $(this).find(".textContent");
 		if (text.length) text[0].scrollTop -= 20;
 		toggleArrows("up");
-	}).autoDestroy(false).parentNav(false);
+	}).autoDestroy(false).allowParentNav(false);
 
 	$('.menu-item-object-page').navEnter(function(){
 		window.location = $(this).find('p').eq(0).attr('href');

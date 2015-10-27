@@ -1,4 +1,4 @@
-var api = new Object();
+ var api = new Object();
 
 (function(){
 
@@ -13,8 +13,8 @@ var api = new Object();
   			data: {action: action, args: args}
 		}).done(function( data ) {
     		success(data);
-    	}).fail(function(){
-			failure();
+    	}).fail(function(jqXHR, textStatus, errorThrown){
+			failure(jqXHR, textStatus, errorThrown);
 		});
 	}
 }());

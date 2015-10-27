@@ -1,4 +1,4 @@
-<!--
+<?php /*
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
 Description: 	HbbTV Application Toolkit
@@ -6,7 +6,8 @@ Version: 		0.1
 Author: 		Fraunhofer Fokus
 Author URI: 	http://www.fokus.fraunhofer.de/go/fame
 Tags: 			hbbtv
--->
+*/
+?>
 
 <footer>
 	<?php
@@ -16,7 +17,7 @@ Tags: 			hbbtv
 	<div id="menu-toggle">
 		<?php $btn = get_post_meta(1,'_main_menu_button',true); if(empty($btn)) {$btn = '5';}?>
 		<img src="<?php echo get_bloginfo('template_url').'/assets/button'.$btn.'.png'; ?>">
-		<div class="menuText"><?php echo get_theme_mod( 'menu_text'); ?></div>
+		<div class="menuText"><?php echo get_theme_mod( 'menu_text') ; ?></div>
 	</div>
 	<script>
 		$(document).ready(function(){
@@ -141,13 +142,13 @@ class hat_walker_footer_menu extends Walker_Nav_Menu {
 		}
 
 		$item_output .= '</p>';
-
-		$item_output .= '<script> $(document).on("nav_init",function(){'.
-			'$generalNav.nav("'.$button.'",function(){$("#menu-item-'.$item->ID.'").navEnter()});});</script>';
 		if ($item->object==='hat_function'){
 			$func = get_post($item->object_id);
-			$item_output .= '<script> $(document).on("nav_init",function(){if (!userFunctions) {userFunctions = new Object();} userFunctions.func'.$func->ID.' = function(){'.get_post_meta($func->ID,'_hat_functionContent',true).'};});</script></li>';
+			$item_output .= '<script> jQuery(document).ready(function(){console.log("userFunc registered");if (!userFunctions) {userFunctions = new Object();} userFunctions["func'.$func->ID.'"] = function(){'.get_post_meta($func->ID,'_hat_functionContent',true).'};});</script></li>';
 		}
+
+		$item_output .= '<script> jQuery(document).ready(function(){'.
+			'$generalNav.nav("'.$button.'",function(){$("#menu-item-'.$item->ID.'").navEnter()});});</script>';
 
 		$item_output .= $args->after;
 

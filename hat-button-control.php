@@ -1,4 +1,6 @@
-<!--
+
+<?php
+/*
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
 Description: 	HbbTV Application Toolkit
@@ -6,10 +8,7 @@ Version: 		0.1
 Author: 		Fraunhofer Fokus
 Author URI: 	http://www.fokus.fraunhofer.de/go/fame
 Tags: 			hbbtv
--->
-
-<?php
-
+*/
 
 
 add_action('admin_menu', 'hat_button_control_menu');
@@ -214,8 +213,8 @@ function hat_button_control_page() {
 
 		<div class="btn_control_pages_list_wrapper">
 			<h1><?php echo $obj->labels->name; ?></h1>
-			<ul data-empty-message="You have no unused Items" class="btn_control_pages_list draggable-list" post-type="<?php echo $post_type?>">
-				<?php $args = array(
+			<ul class="btn_control_pages_list draggable-list" post-type="<?php echo $post_type?>"><?php 
+				$args = array(
 					'posts_per_page'   => 5,
 					'offset'           => 0,
 					'orderby'          => 'date',
@@ -235,16 +234,14 @@ function hat_button_control_page() {
 					}
 					if ($existInMenu) continue;
 					?>
-
 					<li class="drag-menu-item unused">
 						<div class="hat-menu-post" post-type="<?php echo $post->post_type;?>" post-id="<?php echo  $post->ID; ?>"  draggable="true">
 							<?php echo $post->post_title?>
 						</div>
-					</li >
+					</li>
 					<?php
 				}
-				?>
-			</ul>
+			?></ul>
 		</div>
 		<?php
 	}

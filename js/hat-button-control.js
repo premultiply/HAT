@@ -1,4 +1,4 @@
-const maxMenuItems = 3;
+ const maxMenuItems = 3;
 
 $(document).ready(function(){
 	var dragSrcEl = null;

@@ -28,7 +28,7 @@ $(document).on('nav_init',function(){
 					return false;
 				} else if (_el.nav(key)===true){
 					return false;
-				} else if (_el.parentNav()===true){
+				} else if (_el.allowParentNav()===true){
 					return true;
 				} else {
 					return false;
@@ -147,12 +147,15 @@ $.fn.extend({
 		if (func){
 			return this.on('activate',func);
 		} else {
+
 			if (!this.length && this[0]!==$('.navigable')[0]) {
 				$('.navigable').activate();
 				return false;
 			}
-			if ($active && $active.length && this[0] === $active[0] && this.hasClass('active')) {
-				return false;
+			if ($active && $active.length){
+				if (this[0] === $active[0] && this.hasClass('active')) {
+					return false;
+				}
 			}
 			if ($active && $active.autoDestroy()) $active.destroy();
 			var first = this.eq(0);
@@ -174,16 +177,19 @@ $.fn.extend({
 			return this;
 		}
 	},
-	parentNav: function(parNav){
-		if (parNav === undefined){
-			if (this.data('parNav') === undefined){
+	allowParentNav: function(allowParNav){
+		if (allowParNav === undefined){
+			if (this.data('allowParNav') === undefined){
 				return true;
 			} 
-			return this.data('parNav');
+			return this.data('allowParNav');
 		} else {
-			this.data('parNav',parNav);
+			this.data('allowParNav',allowParNav);
 			return this;
 		}
+	},
+	delegateNavToParent: function(){
+		this.data('delP',true);
 	},
 	destroy: function(func) {
 		if (func) {
@@ -192,8 +198,10 @@ $.fn.extend({
 			if (this.hasClass('active')){
 				this.removeClass('active');
 				if($active) $active.removeClass('active');
-				this.triggerHandler('destroy');
 			}
+			var that = this;
+			this.triggerHandler('destroy');
+			return that;
 		}
 	},
 	navUp: function(func) {
@@ -205,6 +213,7 @@ $.fn.extend({
 	navLeft: function(func) {
 		return this.nav('left',func);
 	},
+
 	navRight: function(func) {
 		return this.nav('right',func);
 	},
@@ -220,7 +229,9 @@ $.fn.extend({
 			if (isDef) {
 				this.eq(0).triggerHandler('nav-'+num);
 			}
-			return isDef;
+			var delP = this.data('delP');
+			if (delP) this.data('delP',false);
+			return isDef && !delP;
 		}
 	},
 

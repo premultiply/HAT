@@ -1,18 +1,13 @@
-<!--
-Theme Name: 	hat
-Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
-Description: 	HbbTV Application Toolkit
-Version: 		0.1
-Author: 		Fraunhofer Fokus
-Author URI: 	http://www.fokus.fraunhofer.de/go/fame
-Tags: 			hbbtv
--->
-
 
 <?php
+function is_valid($arg){
+	return isset($arg) && !empty($arg);
+}
+ob_start();
 require_once("../../../wp-load.php");
-if (isset($_GET) && !empty($_GET) && isset($_GET['action']) && !empty($_GET['action']) && isset($_GET['args']) && !empty($_GET['args'])){
+ob_end_clean();
 
+if (is_valid($_GET) && is_valid($_GET['action']) && is_valid($_GET['args'])){
 	$action = $_GET['action'];
 	$args = $_GET['args'];
 	switch ($action) {
@@ -21,12 +16,12 @@ if (isset($_GET) && !empty($_GET) && isset($_GET['action']) && !empty($_GET['act
 			break;
 	}
 } else {
-	error();
+	error("Not Found");
 }
 
 function get_gallery_item_info($id){
 	$info = get_post_meta($id,'_hat_galleryItemContent',true);
-	if ($info && !empty($info)){
+	if (is_valid($info)){
 		$info['title']=get_the_title($id);
 		echo json_encode($info);
 	} else {

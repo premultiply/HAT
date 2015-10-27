@@ -1,15 +1,16 @@
-<!--
-Theme Name: 	hat
-Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
-Description: 	HbbTV Application Toolkit
-Version: 		0.1
-Author: 		Fraunhofer Fokus
-Author URI: 	http://www.fokus.fraunhofer.de/go/fame
-Tags: 			hbbtv
--->
 
 <?php
- 
+ /*
+
+ Theme Name:    hat
+Theme URI:      http://hat.fokus.fraunhofer.de/wordpress/
+Description:    HbbTV Application Toolkit
+Version:        0.1
+Author:         Fraunhofer Fokus
+Author URI:     http://www.fokus.fraunhofer.de/go/fame
+Tags:           hbbtv
+
+*/
 	 class Hat_Utilities {
 
     	public static function print_a( $a ) {
@@ -50,5 +51,9 @@ Tags: 			hbbtv
     		$term = get_term_by( 'name', $cat_name, 'category' );
     		return $term->term_id;
     	}
+
+        public static function minified(){
+            return '';
+        }
 	
     }

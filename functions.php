@@ -1,4 +1,6 @@
-<!--
+<?php
+
+/*
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
 Description: 	HbbTV Application Toolkit
@@ -6,9 +8,7 @@ Version: 		0.1
 Author: 		Fraunhofer Fokus
 Author URI: 	http://www.fokus.fraunhofer.de/go/fame
 Tags: 			hbbtv
--->
-
-<?php
+*/
 
 /* Required external files */
 
@@ -122,7 +122,7 @@ remove_action('wp_head', 'wp_msapplication_TileImage');
 
 
 
-function disable_emojis() {
+/*function disable_emojis() {
 	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 	remove_action( 'wp_print_styles', 'print_emoji_styles' );
@@ -136,7 +136,7 @@ add_action( 'init', 'disable_emojis' );
 
 
 add_filter( 'mime_type_edit_pre', 'filter_function_name', 10, 2 );
-
+*/
 
 // Remove Canonical Link Added By Yoast WordPress SEO Plugin
 function at_remove_dup_canonical_link() {
@@ -579,7 +579,6 @@ function gallery_item_meta_box_callback($post, $param){
 
 
 function popup_meta_box_callback($post, $param){
-	include_once 'userFunctions/popup_functions.php';
 	$postMeta = get_post_meta( $post->ID, '_hat_popupContent', true);
 	if(!$postMeta) { $postMeta = array(); };
 ?>
@@ -589,7 +588,6 @@ function popup_meta_box_callback($post, $param){
 	<tr>
 		<th>Button</th>
 		<th>Function</th>
-		<th>Description</th>
 		<th>Activate</th>
 	</tr> 
 	<?php 
@@ -616,32 +614,37 @@ function popup_meta_box_callback($post, $param){
 
 function popup_button_function($buttonName,$meta,$userFunctions) {
 	
-	$func = $meta['button_functions'][$buttonName]['func'];
-	$desc = $meta['button_functions'][$buttonName]['desc'];
-	$exist = isset($func);
+	$func_id = $meta['button_functions'][$buttonName];
+	$exist = isset($func_id);
 ?>	
 
 	<tr>
 		<th><img src="<?php echo (get_bloginfo('template_url').'/assets/button'. $buttonName.'.png') ?>"></img></th>
 		<th>
-			<select <?php disabled(!$exist);?> class="functionSelection" name="_hat_popupContent[button_functions][<?php echo $buttonName ?>][func]">
+			<select <?php disabled(!$exist);?> class="functionSelection" name="_hat_popupContent[button_functions][<?php echo $buttonName ?>]">
 				<option selected disabled> Select a function </option>
-				<?php 
-				foreach ($userFunctions as $key => $value) {
-					?>
-					<option value="<?php echo $value; ?>" <?php selected( $func, $value ); ?>><?php echo $key; ?></option>
+				<?php
+				$args = array(
+					'posts_per_page'   => 5,
+					'offset'           => 0,
+					'orderby'          => 'date',
+					'order'            => 'DESC',
+					'post_type'        => 'hat_function',
+					'post_status'      => 'publish',
+					'suppress_filters' => true
+				);
+				$funcs = get_posts( $args );
+				foreach ( $funcs as $f ) {?>
+					<option value="<?php echo $f->ID; ?>" <?php selected( $f->ID, $func_id ); ?>><?php echo $f->post_title; ?></option>
 					<?php
 				}
 				?>
 			</select>
 		</th>
 		<th>
-			<input <?php disabled(!$exist);?> type="text" value="<?php echo $desc;?>" placeholder="Enter a description" name="_hat_popupContent[button_functions][<?php echo $buttonName ?>][desc]">
-		</th>
-		<th>
 			<input class="checkbox" type="checkbox" onchange="toogleTableRow(this)" <?php checked($exist);?>>
 		</th>
-			
+
 	</tr>
 <?php
 }
@@ -746,7 +749,7 @@ function meta_box_contentselection_callback($post, $param) {
 	if(!$postMeta) { $postMeta = array(); }else{ $postMeta = $postMeta[$param['args']['box']]; }
 	
 ?>
-	
+
 	<img src="<?php echo $param['args']['iconurl'] ?>" style="width:48%; max-width:250px;min-height:80px;"></img>
 	<div style="float: right; max-width:48%;">
 		<label style="display: block;"><p style="width:90px;display:inline-block;margin:0;">Contenttype:</p>
@@ -755,7 +758,7 @@ function meta_box_contentselection_callback($post, $param) {
 				<option value="broadcast"<?php selected( $postMeta['contenttype'], 'broadcast' ); ?>>Broadcast</option>
 				<option value="video"<?php selected( $postMeta['contenttype'], 'video' ); ?>>Video</option>
 				<option value="text"<?php selected( $postMeta['contenttype'], 'text' ); ?>>Text</option>
-				<option value="image"<?php selected( $postMeta['contenttype'], 'image' ); ?>>Image</option>
+				<option value="image"<?php selected( $postMeta['contenttype'], 'image' ); ?>>Images</option>
 				<option value="scribble"<?php selected( $postMeta['contenttype'], 'scribble' ); ?>>Scribble</option>
 				<option value="social"<?php selected( $postMeta['contenttype'], 'social' ); ?>>Social</option>
 			</select>
@@ -785,16 +788,21 @@ function meta_box_contentselection_callback($post, $param) {
 			case 'broadcast': ?>
 				<?php break;
 			case 'video': ?>
-				Video-URL: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value="<?php echo $postMeta['data'] ?>"><br><br> or <br><br>File-Upload: <input type='button' class='media_upload' value='Select File'>
+				Video-URL: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value="<?php echo $postMeta['data']; ?>"><br><br> or <br><br>File-Upload: <input type='button' class='media_upload' value='Select File'>
 				<?php break;
 			case 'image': ?>
-				Image-URL: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value="<?php echo $postMeta['data'] ?>"><br><br> or <br><br>File-Upload: <input type='button' class='media_upload' value='Select File'>
+				Image-URLs: <textarea name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]'><?php echo addslashes($postMeta['data']); ?></textarea>
+				Image Scale:
+				<select name="_hat_pageContent[<?php echo $param['args']['box'] ?>][img_scale]">
+					<option value="quarters" selected>Quarters</option>
+					<option value="full"<?php selected( $postMeta['img_scale'], 'full' ); ?>>Full</option>
+				</select>
 				<?php break;
 			case 'scribble': ?>
-				Scribble ID: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value="<?php echo $postMeta['data'] ?>">
+				Scribble ID: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value="<?php echo $postMeta['data']; ?>">
 				<?php break;
 			case 'social': ?>
-				Social ID: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value="<?php echo $postMeta['data'] ?>">
+				Social ID: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value="<?php echo $postMeta['data']; ?>">
 				<?php break; ?>
 		<?php endswitch; ?>
 		</div>
@@ -817,7 +825,7 @@ function meta_box_contentselection_callback($post, $param) {
 					jQuery('#nav-checkbox-<?php echo $param['args']['box'] ?>').attr('disabled','true');
 					break;
 				case 'video':
-					html = "Video-URL: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value='<?php echo $postMeta['data'] ?>'><br><br> or <br><br>File-Upload: <input type='button' class='media_upload' value='Select File'>";
+					html = "Video-URL: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value=''><br><br> or <br><br>File-Upload: <input type='button' class='media_upload' value='Select File'>";
 					jQuery('#nav-checkbox-<?php echo $param['args']['box'] ?>').removeAttr('disabled');
 					break;
 				case 'text':
@@ -826,15 +834,15 @@ function meta_box_contentselection_callback($post, $param) {
 					jQuery('#nav-checkbox-<?php echo $param['args']['box'] ?>').removeAttr('disabled');
 					break;
 				case 'image':
-					html = "Image-URL: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value='<?php echo $postMeta['data'] ?>'><br><br> or <br><br>File-Upload: <input type='button' class='media_upload' value='Select File'>";
+					html = "Image-URLs: <textarea name=\'_hat_pageContent[<?php echo $param['args']['box'] ?>][data]\'><\/textarea>\r\n\t\t\t\tImage Scale:\r\n\t\t\t\t<select name=\"_hat_pageContent[<?php echo $param['args']['box']; ?>][img_scale]\">\r\n\t\t\t\t\t<option value=\"quarters\" selected>Quarters<\/option><option value=\"full\"<?php selected( $postMeta['img_scale'], 'full' ); ?>>Full<\/option><\/select>";
 					jQuery('#nav-checkbox-<?php echo $param['args']['box'] ?>').removeAttr('disabled');
 					break;
 				case 'scribble':
-					html = "Scribble ID: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value='<?php echo $postMeta['data'] ?>'>";
+					html = "Scribble ID: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]'>";
 					jQuery('#nav-checkbox-<?php echo $param['args']['box'] ?>').removeAttr('disabled');
 					break;
 				case 'social':
-					html = "Social ID: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value='<?php echo $postMeta['data'] ?>'>";
+					html = "Social ID: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]'>";
 					jQuery('#nav-checkbox-<?php echo $param['args']['box'] ?>').removeAttr('disabled');
 					break;
 				default:
@@ -894,12 +902,32 @@ function generateContentBox($data){
 			$html .= "<script type='text/javascript'>window.setTimeout( function() { $('#broadcast')[0].bindToCurrentChannel(); }, 10); </script>";
 			break;
 		case 'video':
+			$html .= "<div style='display:none' class='video-dummy' vid='$data[data]'></div>";
 			$html .= "<object id='videoplayer' width='100%' height='100%' type='video/mp4' data='$data[data]'></object>";
 			$html .= "<script type='text/javascript'>window.setTimeout( function() { if($('#videoplayer')){vid_obj = $('#videoplayer')[0]; if (vid_obj && vid_obj.play) vid_obj.play(1); } }, 10); </script>";
 			break;
 		case 'image':
+			$imgs = explode(',',$data[data]);
 			$html .= "<div class='contentHeader'>$data[title]</div>";
-			$html .= "<div class='imageContent' style='background-image: url($data[data]);'></div>";
+			$html .= "<div class='imageContent ".$data[img_scale]."' >";
+			if ($data[img_scale]==='full'){
+				foreach ($imgs as $index => $img) {
+					$html .= "<div class='img-row'>";
+					$html .= "<div class='img-wrap' column='0'><img src='".$img."'></img></div>";
+					$html .= "</div>";
+				}
+			} else {
+				foreach ($imgs as $index => $img) {
+					if ($index % 2 == 0) {
+						$html .= "<div class='img-row'>";
+					}
+					$html .= "<div class='img-wrap' column='". $index % 2 ."'><img src='".$img."'></img></div>";
+					if ($index % 2 == 1 || $index==count($imgs)-1) {
+						$html .= "</div>";
+					}
+				}
+			}
+			$html .= "</div>";
 			break;
 		case 'text':
 			$html .= "<div class='contentHeader'>$data[title]</div>";

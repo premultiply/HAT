@@ -1,4 +1,4 @@
-/*
+ /*
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
 Description: 	HbbTV Application Toolkit
@@ -34,7 +34,7 @@ var SocialModule = (function(){
 		socialPopup.style.width = 1152 - $socialContainer.width() + "px";
 		if(($socialContainer.hasClass("content_oneColumn") && $socialContainer.css("float") == "left") || $socialContainer.hasClass("left")){
 			socialPopup.style.left = 64 + $socialContainer.width() + "px";
-		}else if(($socialContainer.hasClass("content_oneColumn") && $socialContainer.css("float") == "none") || $socialContainer.hasClass("middle")){
+		}else if(($socialContainer.hasClass("content_oneColumn") && $socialContainer.css("float") == "none") || $socialContainer.hasClass("middle")){
 			socialPopup.style.left = 64 + $socialContainer.width() + "px";
 		}else if(($socialContainer.hasClass("content_oneColumn") && $socialContainer.css("float") == "right") || $socialContainer.hasClass("right")){
 			socialPopup.style.left = "64px";
@@ -49,7 +49,6 @@ var SocialModule = (function(){
 
 		_scribbleGetData(eventId);
 		_update();
-
 		$socialContainer.navUp(function(){
 			if(!$activePost.length){
 				$activePost = $(".post:first").addClass('activePost');
@@ -75,7 +74,8 @@ var SocialModule = (function(){
 		}).navEnter(function(){
 			if($popupContainer.is(":visible")){
 				$popupContainer.hide().empty();
-				$('.video-dummy').triggerHandler('create-video-object');
+				var vd = $('.video-dummy');
+				if (vd.data('is_conserved')) vd.triggerHandler('create-video-object');
 				if($socialContainer.hasClass("content_oneColumn") && $socialContainer.css("float") == "none"){
 					$socialContainer[0].style.margin = "0 auto";
 				}else if($socialContainer.hasClass("middle")){
@@ -92,7 +92,7 @@ var SocialModule = (function(){
 				}	
 			}
 		}).activate(function(){
-			if(!$activePost.length){
+			if(!$activePost.length){2
 				$activePost = $(".post:first").addClass('activePost');
 			}
 		}).destroy(function(){
@@ -101,11 +101,13 @@ var SocialModule = (function(){
 		});
 
 		$('.video-dummy').on('conserve-video-object',function(){
+			$(this).data('is_conserved',true);
 			var obj = $(this).next('object');
 			$(this).data('playPos',obj[0].playPosition);
 			$(this).data('vidURL',obj.attr('data'));
 			obj.remove();
 		}).on('create-video-object',function(){
+			$(this).data('is_conserved',false);
 			var obj = $('<object id="videoplayer"style="width:100%; height:100%;" type="video/mp4" data='+$(this).attr('vid')+'></object>');
 			$(this).after(obj);
 			obj[0].play(1);
@@ -317,4 +319,3 @@ var SocialModule = (function(){
 
 
 })();
-

@@ -5,7 +5,7 @@ $(document).ready(function(){
 	$('.navigable').navLeft(function(){
 		var prev = $(this).prev('.navigable');
 		if (!prev.length){
-			prev = $(this).prevUntil('.navigable').prev()
+			prev = $(this).prevUntil('.navigable').prev();
 			prev.length && prev.activate();
 		} else {
 			prev.activate();
@@ -13,7 +13,7 @@ $(document).ready(function(){
 	}).navRight(function(){
 		var next = $(this).next('.navigable');
 		if (!next.length){
-			next = $(this).nextUntil('.navigable').next()
+			next = $(this).nextUntil('.navigable').next();
 			next.length && next.activate();
 		} else {
 			next.activate();
@@ -37,28 +37,97 @@ $(document).ready(function(){
 	});
 
 	//Image Box
-	$('.navigable[data-type="image"]').navEnter(function(){
-		var content = $(this).children().eq(1);
-		if(!content.hasClass('fullscreen')){
-			content.addClass('fullscreen');
-		} else {
-			content.removeClass('fullscreen');
-		}
-	}).activate(function(){
-		$(this).append($('<div class="fullscreen-banner">Press OK for Fullscreen</div>'));
+	var fullscreen = false;
+	$('.navigable[data-type="image"]').activate(function(){
+		$(this).append($('<div style="z-index: 1" class="fullscreen-banner">Press OK for Fullscreen</div>'));
+		$(this).autoDestroy(false);
+		$(this).find('.img-row').find('.img-wrap').activate();
+		$(this).autoDestroy(true);
 	}).destroy(function(){
-		$(this).find('.fullscreen-banner').remove();
+		$(this).find('.fullscreen-banner, .img-select').remove();
+	}).find('.img-wrap').activate(function(){
+		if (fullscreen){
+			$(this).addClass('fullscreen');
+		} else {
+			$(this).prepend('<div class="img-select"></div>');
+			$(this).parent().parent()[0].scrollTop += $(this).parent().position().top;
+		}
+	}).destroy(function(){
+		$(this).removeClass('fullscreen').find('.img-select').remove();
+	}).navRight(function(){
+		if (fullscreen) {
+			var next = $(this).next();
+			if (next.length) {
+				next.activate();
+			} else {
+				next = $(this).parent().next();
+				if (next.length){
+					next.children().first().activate();
+				}
+			}
+		} else {
+			var next = $(this).next();
+			if (next.length){
+				next.activate();
+			} else {
+				$(this).parent().parent().parent().destroy();
+				$(this).destroy().delegateNavToParent();
+			}
+		}
+	}).navLeft(function(){
+		if (fullscreen) {
+			var prev = $(this).prev();
+			if (prev.length) {
+				prev.activate();
+			} else {
+				prev = $(this).parent().prev();
+				if (prev.length){
+					prev.children().last().activate();
+				}
+			}
+		} else {
+			var prev = $(this).prev();
+			if (prev.length){
+				prev.activate();
+			} else {
+				$(this).parent().parent().parent().destroy();
+				$(this).destroy().delegateNavToParent();
+			}
+		}
+	}).navUp(function(){
+		if (!fullscreen){
+			var prev = $(this).parent().prev().find('.img-wrap').eq($(this).attr('column'));
+			if (prev.length){
+				prev.activate();
+			}
+		}
+	}).navDown(function(){
+		if (!fullscreen){
+			var next = $(this).parent().next().find('.img-wrap').eq($(this).attr('column'));
+			if (next.length){
+				next.activate();
+			}
+		}
+	}).navEnter(function(){
+		if ($(this).hasClass('fullscreen')){
+			$(this).removeClass('fullscreen');
+			$(this).prepend('<div class="img-select"></div>');
+			$(this).parent().parent()[0].scrollTop +=  $(this).parent().position().top;
+			fullscreen=false;
+		} else {
+			$(this).addClass('fullscreen');
+			$(this).find('.img-select').remove();
+			fullscreen=true;
+		}
 	});
 
 	//Video Box
 	$('.navigable[data-type="video"]').navEnter(function(){
-		var content = $('#videoplayer')
+		var content = $('#videoplayer');
 		if(!content.hasClass('fullscreen')){
 			content.addClass('fullscreen');
-			canNavigate=false;
 		} else {
 			content.removeClass('fullscreen');
-			canNavigate=true;
 		}
 	}).activate(function(){
 		$(this).append($('<div class="fullscreen-banner" style="top:-51px!important;">Press OK for Fullscreen</div>'));

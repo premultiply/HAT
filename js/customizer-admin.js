@@ -1,4 +1,4 @@
-//Cusomizer Color Picker
+ //Cusomizer Color Picker
 jQuery(document).ready(function($) {
  
 Color.prototype.toString = function(remove_alpha) {
