@@ -22,7 +22,15 @@ jQuery(document).ready(function(){
    window.send_to_editor = function(html) {
       if(currentMediaUploader){
          var url = jQuery(html).attr('href');
-         currentMediaUploader.parent().children("input:first").attr("value", url);
+         if (!currentMediaUploader.siblings("input:first").attr("value", url).length){
+            var textarea = currentMediaUploader.siblings("textarea:first");
+            if ($.trim(textarea.val())){
+               textarea.append(",\n"+url);
+            } else {
+               textarea.append(url);
+            }
+
+         }
       }else{
          window.original_send_to_editor(html);
       }

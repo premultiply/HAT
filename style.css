@@ -164,18 +164,21 @@ header {
     height: 100%;
     width: 50%;
     overflow: hidden;
+    background-position: center !important;
+    background-repeat:no-repeat;
+    background-size:cover;
 }
+
+.img-wrap.fullscreen {
+    background-size:contain !important;
+    background-color: black;
+}
+
 
 .imageContent.full .img-wrap {
     width: 100%;
 }
 
-.img-wrap img{
-    width: 100%;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-}
 
 .img-row {
     width: 100%;
@@ -489,7 +492,7 @@ footer li{
     left: 0px;
     margin: 0;
     position: fixed !important;
-    z-index: 10000;
+    z-index: 10;
 }
 
 #popup {
@@ -527,6 +530,31 @@ footer li{
     right:0;
     background-image: url(assets/arrow_up_white.png);
 }
+
+.arrows-h {
+    width: 1140px;
+    height: 60px;
+    margin: 330px auto;
+    z-index: 11;
+}
+
+.arrows-h .arrow {
+    width: 60px;
+    height: 60px;
+    background-size: 100%;
+}
+
+.arrows-h .arrow.arrowleft{
+    float: left;
+    background-image: url(assets/arrow_left_white.png);
+}
+
+.arrows-h .arrow.arrowright{
+    float: right;
+    background-image: url(assets/arrow_right_white.png);
+}
+
+
 
 #overlay {
     position: absolute;

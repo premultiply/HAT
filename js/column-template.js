@@ -43,11 +43,24 @@ $(document).ready(function(){
 		$(this).autoDestroy(false);
 		$(this).find('.img-row').find('.img-wrap').activate();
 		$(this).autoDestroy(true);
+		var imgs = $(this).find('.img-wrap');
+		imgs.first().addClass('first-img');
+		imgs.last().addClass('last-img');
 	}).destroy(function(){
 		$(this).find('.fullscreen-banner, .img-select').remove();
 	}).find('.img-wrap').activate(function(){
 		if (fullscreen){
 			$(this).addClass('fullscreen');
+			if ($(this).hasClass('first-img')) {
+				$('#arrows-h .arrowleft').hide();
+			} else {
+				$('#arrows-h .arrowleft').show();
+			}
+			if ($(this).hasClass('last-img')) {
+				$('#arrows-h .arrowright').hide();
+			} else {
+				$('#arrows-h .arrowright').show();
+			}
 		} else {
 			$(this).prepend('<div class="img-select"></div>');
 			$(this).parent().parent()[0].scrollTop += $(this).parent().position().top;
@@ -110,11 +123,20 @@ $(document).ready(function(){
 		}
 	}).navEnter(function(){
 		if ($(this).hasClass('fullscreen')){
+			$('#arrows-h').remove();
+			$(this).children('.arrows').remove();
 			$(this).removeClass('fullscreen');
 			$(this).prepend('<div class="img-select"></div>');
 			$(this).parent().parent()[0].scrollTop +=  $(this).parent().position().top;
 			fullscreen=false;
 		} else {
+			$('body').append('<div id="arrows-h" class="arrows-h"><div class="arrow arrowleft"></div><div class="arrow arrowright"></div></div>');
+			if ($(this).hasClass('first-img')) {
+				$('#arrows-h .arrowleft').hide();
+			}
+			if ($(this).hasClass('last-img')) {
+				$('#arrows-h .arrowright').hide();
+			}
 			$(this).addClass('fullscreen');
 			$(this).find('.img-select').remove();
 			fullscreen=true;

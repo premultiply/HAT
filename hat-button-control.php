@@ -50,7 +50,7 @@ function hat_button_control_page() {
 				
 		?>
 
-		<h1>Footer Menu Actions</h1>
+		<h2>Footer Menu Actions</h2>
 		<div class= "btn_control_pages_buttons" style="margin: 20px 0px;">
 			<div class=class="btn_control_pages_buttons_pages" style="padding: 15px; height: 25px; text-align: center;">
 				<div class="hat-menu-button" style="width:10%;">
@@ -129,8 +129,8 @@ function hat_button_control_page() {
 			</div>
 			
 		</div>
-		Note that having more than 3-5 Items in your Footer will probably cause some of them to overflow and thus be invisible
-		<h1>Invisible Actions</h1>
+		<p>Note that having more than 3-5 Items in your Footer will probably cause some of them to overflow and thus be invisible</p>
+		<h2>Invisible Actions</h2>
 		<div class= "btn_control_pages_buttons">
 			<div class=class="btn_control_pages_buttons_pages">
 				<ul id="invis-item-list" class="droped-list">
@@ -180,7 +180,7 @@ function hat_button_control_page() {
 			</div>
 		</div>
 
-		<h4>Available Buttons</h4>
+		<h2>Available Buttons</h2>
 		<ul id = "button-bar">
 		<?php 
 		foreach($availButtons as $key=>$value){
@@ -212,7 +212,7 @@ function hat_button_control_page() {
 		?>
 
 		<div class="btn_control_pages_list_wrapper">
-			<h1><?php echo $obj->labels->name; ?></h1>
+			<h2><?php echo $obj->labels->name; ?></h2>
 			<ul class="btn_control_pages_list draggable-list" post-type="<?php echo $post_type?>"><?php 
 				$args = array(
 					'posts_per_page'   => 5,
@@ -250,7 +250,7 @@ function hat_button_control_page() {
 
 
 	<meta charset="utf-8">
-	<h2>Button Control</h2>
+	<h1>Button Control</h1>
 	<div class="btn_control_decription">With the Button Control feature you are able to handle the actions of your remote control buttons (numbers and color buttons). You will find more information about this feature in our documentation at the <a href="http://fraunhoferfokus.github.io/HAT/index.html#hat_documentation_button_control" target="blank">GitHub repository</a>.</div>
 	<div class="btn_control_post_lists" style="overflow:auto; ">
 		<?php

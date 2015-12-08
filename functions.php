@@ -534,21 +534,20 @@ function gallery_item_meta_box_callback($post, $param){
 	?>	
 		<style>
 			#description-editor {
-				position: absolute;
 				left: 40%;
 				width: 55%;
 				margin-right: 5%;
+				float: left;
 				
 			}
 			#preview {
 				margin: 0px 5%;
 				left: 0%;
 				width: 30%;
-				position: absolute;
-				overflow: hidden;
+				float: left;
 			}
 			#content-edit{
-				height: 600px;
+				overflow:auto
 			}
 			#cover-preview{
 				width: 100%;
@@ -563,6 +562,45 @@ function gallery_item_meta_box_callback($post, $param){
 			<?php
 			wp_editor($postMeta['info'],'editor',array('textarea_name'=>'_hat_galleryItemContent[info]','drag_drop_upload' => true,'wpautop' => false));
 			?>
+			<h4>Associated Galleries</h4>
+			<div id="associated-galleries">
+				<ul style="margin-left:30px;"><?php
+					$args = array(
+						'orderby'          => 'date',
+						'order'            => 'DESC',
+						'tag__in'          => wp_get_post_tags($post->ID, array( 'fields' => 'ids' )),
+						'post_type'        => 'page',
+						'post_status'      => 'publish',
+						'suppress_filters' => true,
+						'meta_query' => array(
+							array(
+								'key'     => '_wp_page_template',
+								'value'   => 'template-media_gallery.php',
+								'compare' => '=',
+							),
+						),
+					);
+					// The Query
+					$items = new WP_Query( $args );
+
+					// The Loop
+					if ( $items->have_posts() ) {
+						while ( $items->have_posts() ) {
+							$items->the_post();
+							?>
+							<li>
+								<?php echo get_the_title();?>  <a href="<?php echo get_edit_post_link($item->ID);?>">edit</a>
+							</li>
+							<?php
+						}
+					} else {
+						// no posts found
+					}
+					/* Restore original Post Data */
+					wp_reset_postdata();
+					?>
+				</ul>
+			</div>
 		</div>
 		<div id="preview">
 			<label> Cover-URL <input type='text' name='_hat_galleryItemContent[cover_url]' value="<?php echo $postMeta['cover_url']; ?>"> <br/><br/>or Cover-Upload: <input type='button' class='media_upload' value='Select File'></label>
@@ -584,6 +622,10 @@ function popup_meta_box_callback($post, $param){
 ?>
 
 	<!--<script type='text/javascript' src="<?php bloginfo( 'template_url' ); ?>/js/general/jquery-1.11.0.js"></script>-->
+	<p>
+		In this section you can assign your JavaScript functions to buttons which are <strong>only</strong> available in this particular popup.
+		The buttons will be shown on the footer of the popup-window.
+	</p>
 	<table id="buttonFunctions">
 	<tr>
 		<th>Button</th>
@@ -592,11 +634,11 @@ function popup_meta_box_callback($post, $param){
 	</tr> 
 	<?php 
 		for ($i=0;$i<10;$i++) {
-			popup_button_function($i,$postMeta,$userFunctions);
+			popup_button_function($i,$postMeta);
 		}
-		popup_button_function('Blue',$postMeta,$userFunctions);
-		popup_button_function('Green',$postMeta,$userFunctions);
-		popup_button_function('Yellow',$postMeta,$userFunctions);
+		popup_button_function('Blue',$postMeta);
+		popup_button_function('Green',$postMeta);
+		popup_button_function('Yellow',$postMeta);
 	?>
 	</table>
 	<script>
@@ -612,12 +654,11 @@ function popup_meta_box_callback($post, $param){
 <?php
 }
 
-function popup_button_function($buttonName,$meta,$userFunctions) {
+function popup_button_function($buttonName,$meta) {
 	
 	$func_id = $meta['button_functions'][$buttonName];
 	$exist = isset($func_id);
-?>	
-
+?>
 	<tr>
 		<th><img src="<?php echo (get_bloginfo('template_url').'/assets/button'. $buttonName.'.png') ?>"></img></th>
 		<th>
@@ -717,6 +758,27 @@ function gallery_meta_box_callback($post, $param){
 				<option value="right"<?php selected( $postMeta['list_position'], 'right' ); ?>>Right</option>
 			</select>
 		</label>
+		<div>
+			<h4>Associated Gallery Items</h4>
+			<div id="associated-items">
+				<ul style="margin-left:30px;"><?php
+					$args = array(
+						'orderby'          => 'date',
+						'order'            => 'DESC',
+						'tag__in'          => wp_get_post_tags($post->ID, array( 'fields' => 'ids' )),
+						'post_type'        => 'hat_gallery_item',
+						'post_status'      => 'publish',
+						'suppress_filters' => true
+					);
+					$items = get_posts( $args );
+					foreach ( $items as $item ) {?>
+						<li>
+							<?php echo $item->post_title; ?>  <a href="<?php echo get_edit_post_link($item->ID);?>">edit</a>
+						</li>
+					<?php }	?>
+				</ul>
+			</div>
+		</div>
 	<?php
 }
 
@@ -797,6 +859,7 @@ function meta_box_contentselection_callback($post, $param) {
 					<option value="quarters" selected>Quarters</option>
 					<option value="full"<?php selected( $postMeta['img_scale'], 'full' ); ?>>Full</option>
 				</select>
+				<input type='button' class='media_upload' value='Upload Image'>
 				<?php break;
 			case 'scribble': ?>
 				Scribble ID: <input type='text' name='_hat_pageContent[<?php echo $param['args']['box'] ?>][data]' value="<?php echo $postMeta['data']; ?>">
@@ -834,7 +897,7 @@ function meta_box_contentselection_callback($post, $param) {
 					jQuery('#nav-checkbox-<?php echo $param['args']['box'] ?>').removeAttr('disabled');
 					break;
 				case 'image':
-					html = "Image-URLs: <textarea name=\'_hat_pageContent[<?php echo $param['args']['box'] ?>][data]\'><\/textarea>\r\n\t\t\t\tImage Scale:\r\n\t\t\t\t<select name=\"_hat_pageContent[<?php echo $param['args']['box']; ?>][img_scale]\">\r\n\t\t\t\t\t<option value=\"quarters\" selected>Quarters<\/option><option value=\"full\"<?php selected( $postMeta['img_scale'], 'full' ); ?>>Full<\/option><\/select>";
+					html = "Image-URLs: <textarea name=\'_hat_pageContent[<?php echo $param['args']['box'] ?>][data]\'><\/textarea>\r\n\t\t\t\tImage Scale:\r\n\t\t\t\t<select name=\"_hat_pageContent[<?php echo $param['args']['box']; ?>][img_scale]\">\r\n\t\t\t\t\t<option value=\"quarters\" selected>Quarters<\/option><option value=\"full\"<?php selected( $postMeta['img_scale'], 'full' ); ?>>Full<\/option><\/select><input type='button' class='media_upload' value='Upload Image'>";
 					jQuery('#nav-checkbox-<?php echo $param['args']['box'] ?>').removeAttr('disabled');
 					break;
 				case 'scribble':
@@ -913,7 +976,7 @@ function generateContentBox($data){
 			if ($data[img_scale]==='full'){
 				foreach ($imgs as $index => $img) {
 					$html .= "<div class='img-row'>";
-					$html .= "<div class='img-wrap' column='0'><img src='".$img."'></img></div>";
+					$html .= "<div class='img-wrap' column='0' style='background-image:url(\"".$img."\")'></div>";
 					$html .= "</div>";
 				}
 			} else {
@@ -921,7 +984,7 @@ function generateContentBox($data){
 					if ($index % 2 == 0) {
 						$html .= "<div class='img-row'>";
 					}
-					$html .= "<div class='img-wrap' column='". $index % 2 ."'><img src='".$img."'></img></div>";
+					$html .= "<div class='img-wrap' column='". $index % 2 ."' style='background-image:url(\"".$img."\")'></div>";
 					if ($index % 2 == 1 || $index==count($imgs)-1) {
 						$html .= "</div>";
 					}

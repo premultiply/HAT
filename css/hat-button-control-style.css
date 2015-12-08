@@ -32,6 +32,7 @@ Tags: 			hbbtv
   width: 100%;
   float: left;
   margin: 0 5% 5% 0;
+  overflow: hidden;
 }
 
 .btn_control_pages_buttons_wrapper {
@@ -40,7 +41,11 @@ Tags: 			hbbtv
   margin: 0 5% 5% 0;
 }
 
-#btn_control_pages_list,
+.btn_control_pages_list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
 .btn_control_pages_list_wrapper li {
 	padding: 10px;
   width: auto;

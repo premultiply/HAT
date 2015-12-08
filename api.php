@@ -29,6 +29,7 @@ function get_gallery_item_info($id){
 	}
 }
 
+
 function error($msg){
 	header('HTTP/1.1 400 Bad Request');
 	echo $msg;
