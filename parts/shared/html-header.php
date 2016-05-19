@@ -1,3 +1,4 @@
+<!DOCTYPE html PUBLIC '-//HbbTV//1.1.1//EN' 'http://www.hbbtv.org/dtd/HbbTV-1.1.1.dtd'>
 <!--
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
@@ -8,8 +9,6 @@ Author URI: 	http://www.fokus.fraunhofer.de/go/fame
 Tags: 			hbbtv
 -->
 
-
-<!DOCTYPE html PUBLIC '-//HbbTV//1.1.1//EN' 'http://www.hbbtv.org/dtd/HbbTV-1.1.1.dtd'>
 <?php $min = Hat_Utilities::minified();?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
