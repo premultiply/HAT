@@ -1,4 +1,3 @@
-
 <?php
 /*
 Theme Name: 	hat
@@ -9,7 +8,6 @@ Author: 		Fraunhofer Fokus
 Author URI: 	http://www.fokus.fraunhofer.de/go/fame
 Tags: 			hbbtv
 */
-
 
 add_action('admin_menu', 'hat_button_control_menu');
 add_action('admin_enqueue_scripts', 'hat_enqueue_button_control_scripts');
@@ -279,4 +277,3 @@ function hat_button_control_styles() {
 	wp_register_style( 'hat-button-control-style', get_template_directory_uri() . '/css/hat-button-control-style.css', NULL, NULL, 'all' );
 	wp_enqueue_style( 'hat-button-control-style' );
 }
-
