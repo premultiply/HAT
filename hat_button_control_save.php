@@ -1,6 +1,4 @@
-
 <?php
-
 /*
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
@@ -13,7 +11,7 @@ Tags: 			hbbtv
 
 require_once("../../../wp-load.php");
 
-				//Main Menu Item
+//Main Menu Item
 if (isset($_POST['main_menu_button'])){
 	update_post_meta( 1, '_main_menu_button', $_POST['main_menu_button']);
 }
