@@ -13,6 +13,7 @@ Author: 		Fraunhofer Fokus
 Author URI: 	http://www.fokus.fraunhofer.de/go/fame
 Tags: 			hbbtv
 */
+
 Hat_Utilities::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
 
 	<?php
@@ -209,6 +210,3 @@ Hat_Utilities::get_template_parts( array( 'parts/shared/html-header', 'parts/sha
 
 
 <?php Hat_Utilities::get_template_parts( array( 'parts/shared/footer','parts/shared/html-footer') ); ?>
-
-
-
