@@ -7,7 +7,8 @@ Version: 		0.1
 Author: 		Fraunhofer Fokus
 Author URI: 	http://www.fokus.fraunhofer.de/go/fame
 Tags: 			hbbtv
-*/?>
+*/
+?>
 
 			</div>
 			<div style="z-index: 3" id="overlay"></div>
