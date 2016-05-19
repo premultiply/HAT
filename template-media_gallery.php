@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Template Name: Gallery
  * A custom page template for the HAT Full-Template.
