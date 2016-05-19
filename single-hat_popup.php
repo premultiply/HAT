@@ -1,7 +1,4 @@
-
-
 <?php
-
 /*
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
@@ -11,6 +8,7 @@ Author: 		Fraunhofer Fokus
 Author URI: 	http://www.fokus.fraunhofer.de/go/fame
 Tags: 			hbbtv
 */
+
 		$buttonFuncs = get_post_meta(get_post()->ID,'_hat_popupContent',true);
 		if (isset($buttonFuncs) && isset($buttonFuncs['button_functions'])) {
 			$buttonFuncs = $buttonFuncs['button_functions'];
@@ -68,4 +66,3 @@ Tags: 			hbbtv
 		</div>
 	<?php endwhile; ?>
 </div>
-
