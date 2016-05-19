@@ -1,10 +1,9 @@
-
-
 <?php
 /**
  * Template Name: Two Columns
  * A custom left sidebar template for the HAT Two-Columns-Template.
  */
+
 /*
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
