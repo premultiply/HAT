@@ -261,7 +261,7 @@ function hat_button_control_page() {
 		<?php action_editor($menu_items); ?>
 	</div>
 
-	<input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes"  onclick="saveButtonControlData('<?php echo get_template_directory_uri(); ?>/hat_button_control_save.php')"/>
+	<input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes"  onclick="saveButtonControlData('<?php echo get_template_directory_uri(); ?>/hat-button-control-save.php')"/>
 	<div id="save-notification"><h3>Button Control settings saved!</h3></div>
 	<?php
 }
