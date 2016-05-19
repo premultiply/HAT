@@ -1,7 +1,4 @@
-
-
 <?php
-
 /**
  * Template Name: Three Columns
  * A custom page template for the HAT Three-Columns-Template.
@@ -16,6 +13,7 @@ Author: 		Fraunhofer Fokus
 Author URI: 	http://www.fokus.fraunhofer.de/go/fame
 Tags: 			hbbtv
 */
+
 	$boxview = $_GET['boxview'];
 	$hpc = get_post_meta($post->ID,'_hat_pageContent',TRUE); 
 	if(!$hpc) { $hpc = array(); }
@@ -43,5 +41,3 @@ Tags: 			hbbtv
 
 	} 
 ?>
-
-
