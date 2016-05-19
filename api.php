@@ -1,4 +1,3 @@
-
 <?php
 function is_valid($arg){
 	return isset($arg) && !empty($arg);
