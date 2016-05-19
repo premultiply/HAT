@@ -1,4 +1,5 @@
-<?php /*
+<?php
+/*
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
 Description: 	HbbTV Application Toolkit
