@@ -1,28 +1,25 @@
-
 <?php
 /*
-    
-Theme Name:     hat
-Theme URI:      http://hat.fokus.fraunhofer.de/wordpress/
-Description:    HbbTV Application Toolkit
-Version:        0.1
-Author:         Fraunhofer Fokus
-Author URI:     http://www.fokus.fraunhofer.de/go/fame
-Tags:           hbbtv
+Theme Name: 	hat
+Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
+Description: 	HbbTV Application Toolkit
+Version: 		0.1
+Author: 		Fraunhofer Fokus
+Author URI: 	http://www.fokus.fraunhofer.de/go/fame
+Tags: 			hbbtv
 
+* Author - Rob Thomson <rob@marotori.com>
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License version 2 as
+* published by the Free Software Foundation.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
 
- * Author - Rob Thomson <rob@marotori.com>
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- */
+*/
 
 //session_start();
 ob_start();
