@@ -1,6 +1,4 @@
-
 <?php 
-
 /*
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
@@ -12,8 +10,6 @@ Tags: 			hbbtv
 */
 
 Hat_Utilities::get_template_parts( array( 'parts/shared/html-header', 'parts/shared/header' ) ); ?>
-
-
 
 <h2>Page not found</h2>
 
