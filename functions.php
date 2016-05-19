@@ -1,5 +1,4 @@
 <?php
-
 /*
 Theme Name: 	hat
 Theme URI: 		http://hat.fokus.fraunhofer.de/wordpress/
@@ -1046,6 +1045,3 @@ function myplugin_meta_box_callback($post) {
 	echo  '<img src="'.$template_mockup.'" style="width:100%" ></img>';
 
 }
-
-
-
